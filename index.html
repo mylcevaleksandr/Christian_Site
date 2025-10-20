@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Северное Братство | Объединение церквей Северо-Запада</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
+    <style>
+        :root {
+            --primary: #0A1128;       /* Deep Navy */
+            --secondary: #C5A880;     /* Antique Gold */
+            --accent: #9E2A2B;        /* Terracotta */
+            --light: #F8F5F0;         /* Ivory */
+            --text-dark: #2D2A24;     /* Charcoal */
+            --text-light: #6D6A64;    /* Stone Gray */
+            --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--light);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        /* Шапка с анимацией при скролле */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.8rem 0;
+            background: rgba(248, 245, 240, 0.96);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        header.scrolled {
+            padding: 1.2rem 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            margin-right: 12px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        
+        .logo-text {
+            position: relative;
+        }
+        
+        .logo-text:after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--secondary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .logo:hover .logo-text:after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.8rem;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            position: relative;
+            padding: 0.4rem 0;
+            transition: var(--transition);
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        /* Герой-секция с параллаксом и градиентной анимацией */
+        .hero {
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(10, 17, 40, 0.2) 0%, rgba(197, 168, 128, 0.15) 100%);
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1515586838455-8f8a940b7d13?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1790&q=80') center/cover no-repeat fixed;
+            z-index: -1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(248, 245, 240, 0.3) 0%, rgba(248, 245, 240, 0.8) 100%);
+        }
+        
+        .hero-content {
+            max-width: 780px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 4.2rem;
+            margin-bottom: 1.8rem;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s 0.3s forwards;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+            opacity: 0.9;
+            max-width: 620px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s 0.5s forwards;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s 0.7s forwards;
+        }
+        
+        /* Кнопки с градиентом и анимацией */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem 2.8rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: var(--transition);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--light);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-primary:before {
+            background: linear-gradient(45deg, var(--primary) 0%, #1a2a5f 100%);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px rgba(10, 17, 40, 0.2);
+        }
+        
+        .btn-primary:hover:before {
+            transform: scale(1.05);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--light);
+            transform: translateY(-4px);
+        }
+        
+        /* Секция ценностей с 3D-эффектом карточек */
+        .values {
+            padding: 8rem 0;
+            background: var(--light);
+            position: relative;
+        }
+        
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 5rem;
+        }
+        
+        .section-title {
+            font-size: 3.2rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-top: 1.8rem;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+        }
+        
+        .value-card {
+            background: white;
+            padding: 3rem 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+        
+        .value-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--secondary);
+            transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .value-card:hover:before {
+            width: 100%;
+            opacity: 0.1;
+        }
+        
+        .value-icon {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .value-card:hover .value-icon {
+            transform: scale(1.1);
+            color: var(--accent);
+        }
+        
+        .value-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .value-card p {
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Секция с картой - ПЕРЕРАБОТАНА */
+        .map-section {
+            padding: 6rem 0;
+            background: linear-gradient(to bottom, var(--light) 0%, #f0ece3 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-container {
+            height: 600px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+            background: #e9e5dc;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Контейнер для поиска */
+        .map-search-container {
+            padding: 1.5rem 2rem;
+            background: white;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 3;
+        }
+        
+        .map-search-box {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .map-search-input {
+            flex: 1;
+            padding: 1.3rem 1.3rem 1.3rem 4.5rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            background: var(--light);
+        }
+        
+        .map-search-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 5px 20px rgba(197, 168, 128, 0.2);
+        }
+        
+        .map-search-input::placeholder {
+            color: var(--text-light);
+            opacity: 0.8;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+            font-size: 1.4rem;
+            pointer-events: none;
+        }
+        
+        .map-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem;
+            background: linear-gradient(to top, rgba(10, 17, 40, 0.9) 0%, transparent 100%);
+            color: white;
+            z-index: 2;
+        }
+        
+        .map-overlay h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .map-overlay p {
+            max-width: 600px;
+            opacity: 0.9;
+        }
+        
+        .map-placeholder {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            max-width: 500px;
+            padding: 0 2rem;
+        }
+        
+        .map-placeholder strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* Секция курса */
+        .course-cta {
+            padding: 8rem 0;
+            background: url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') center/cover no-repeat fixed;
+            position: relative;
+        }
+        
+        .course-cta:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 17, 40, 0.85);
+        }
+        
+        .course-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+        
+        .course-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .course-content p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+        
+        /* Подвал */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 6rem 0 3rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1.8rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+        
+        .footer-col h4:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-col ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+            position: relative;
+        }
+        
+        .footer-col ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-col ul li a:hover:after {
+            width: 100%;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+        
+        /* Анимации */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .animate-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            nav ul {
+                gap: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                gap: 1.2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                min-height: 700px;
+                text-align: center;
+            }
+            
+            .hero-content {
+                margin: 0 auto;
+                padding-top: 6rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-title {
+                font-size: 2.6rem;
+            }
+            
+            .map-container {
+                height: 500px;
+            }
+            
+            .map-overlay {
+                padding: 2rem;
+            }
+            
+            .map-overlay h3 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 1rem 2rem;
+                width: 100%;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .map-container {
+                height: 400px;
+            }
+            
+            .map-search-input {
+                padding: 1.1rem 1.1rem 1.1rem 3.5rem;
+                font-size: 1rem;
+            }
+            
+            .search-icon {
+                left: 1.3rem;
+                font-size: 1.2rem;
+            }
+            
+            .map-placeholder {
+                font-size: 1.2rem;
+            }
+            
+            .map-overlay {
+                padding: 1.5rem;
+            }
+            
+            .map-overlay h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="header-container">
+                <a href="#" class="logo">
+                    <div class="logo-icon">✝</div>
+                    <div class="logo-text">Северное Братство</div>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#">Главная</a></li>
+                        <li><a href="#">О движении</a></li>
+                        <li><a href="#">Евангелизация</a></li>
+                        <li><a href="#">Найти общину</a></li>
+                        <li><a href="#">Мероприятия</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1>Духовное возрождение Северо-Запада России</h1>
+            <p>Объединение христианских общин, несущих Евангелие в городах Карелии, Архангельской области и Ленинградской области</p>
+            <div class="hero-btns">
+                <a href="#" class="btn btn-primary">Начать интерактивный курс</a>
+                <a href="#" class="btn btn-outline">Найти общину рядом</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="values">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Наши ценности</h2>
+                <p class="section-subtitle">Основа нашей веры и служения в городах Северо-Запада</p>
+            </div>
+            
+            <div class="values-grid">
+                <div class="value-card animate-in">
+                    <div class="value-icon"><i class="fas fa-bible"></i></div>
+                    <h3>Авторитет Писания</h3>
+                    <p>Библия - богодухновенное Слово Божье, единственный непогрешимый авторитет в вопросах веры и жизни</p>
+                </div>
+                
+                <div class="value-card animate-in">
+                    <div class="value-icon"><i class="fas fa-cross"></i></div>
+                    <h3>Евангельская весть</h3>
+                    <p>Спасение только по благодати через веру в искупительную жертву Иисуса Христа</p>
+                </div>
+                
+                <div class="value-card animate-in">
+                    <div class="value-icon"><i class="fas fa-hands-praying"></i></div>
+                    <h3>Священство всех верующих</h3>
+                    <p>Каждый христианин призван к служению и имеет прямой доступ к Богу через Христа</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ПЕРЕРАБОТАННАЯ СЕКЦИЯ С КАРТОЙ И ПОИСКОМ -->
+    <section class="map-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Наши общины</h2>
+                <p class="section-subtitle">Найдите ближайшую церковь в вашем городе</p>
+            </div>
+            
+            <div class="map-container">
+                <!-- Поисковая строка -->
+                <div class="map-search-container">
+                    <div class="map-search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="map-search-input" placeholder="Введите ваш город">
+                    </div>
+                </div>
+                
+                <!-- Контент карты -->
+                <div class="map-content">
+                    <div class="map-placeholder">
+                        <strong>Интерактивная карта общин Северо-Запада</strong><br>
+                        Поиск по городам доступен в строке выше
+                    </div>
+                    
+                    <div class="map-overlay">
+                        <h3>46 городов</h3>
+                        <p>От Коми до Архангельска - везде есть духовная семья, готовая принять вас</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="course-cta">
+        <div class="container">
+            <div class="course-content">
+                <h2>Интерактивный курс "Основы христианства"</h2>
+                <p>7-дневное путешествие в мир Библии, созданное специально для ищущих Бога в современном мире</p>
+                <a href="#" class="btn btn-primary">Начать обучение бесплатно</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Северное Братство</h4>
+                    <p style="opacity: 0.8; margin-bottom: 1.5rem;">Объединение евангельских церквей Северо-Западного региона России.</p>
+                    <p style="opacity: 0.8;">Санкт-Петербург, ул. Рубинштейна, 15</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Разделы</h4>
+                    <ul>
+                        <li><a href="#">Главная</a></li>
+                        <li><a href="#">О движении</a></li>
+                        <li><a href="#">Вероучение</a></li>
+                        <li><a href="#">История</a></li>
+                        <li><a href="#">Служения</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Ресурсы</h4>
+                    <ul>
+                        <li><a href="#">Онлайн-курсы</a></li>
+                        <li><a href="#">Библиотека</a></li>
+                        <li><a href="#">Проповеди</a></li>
+                        <li><a href="#">Медиатека</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="tel:+78121234567">+7 (812) 123-45-67</a></li>
+                        <li><a href="mailto:info@северноебратство.ру">info@северноебратство.ру</a></li>
+                        <li><a href="#">Для пасторов</a></li>
+                        <li><a href="#">Партнерство</a></li>
+                        <li><a href="#">Пожертвования</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                © 2025 Северное Братство. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Анимация шапки при скролле
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Анимация появления элементов при скролле
+        const animateElems = document.querySelectorAll('.animate-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                }
+            });
+        }, { threshold: 0.15 });
+        
+        animateElems.forEach(elem => {
+            observer.observe(elem);
+        });
+        
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Имитация загрузки для демо
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.querySelector('.hero h1').style.opacity = '1';
+                document.querySelector('.hero p').style.opacity = '1';
+                document.querySelector('.hero-btns').style.opacity = '1';
+            }, 300);
+            
+            // Фокус на поле поиска при клике на карту
+            const mapSearchInput = document.querySelector('.map-search-input');
+            const mapContent = document.querySelector('.map-content');
+            
+            if (mapContent && mapSearchInput) {
+                mapContent.addEventListener('click', () => {
+                    mapSearchInput.focus();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
