@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
+            console.log(target);
             if (target) {
                 window.scrollTo({
                     top: target.offsetTop - 100,
